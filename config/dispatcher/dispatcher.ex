@@ -1,6 +1,7 @@
+
 defmodule Dispatcher do
   use Matcher
-
+  
   define_accept_types [
     json: [ "application/json", "application/vnd.api+json" ],
     html: [ "text/html", "application/xhtml+html" ],
@@ -21,36 +22,55 @@ defmodule Dispatcher do
   # STATIC
   ###############
 
-  # self-service
-  match "/index.html", %{ layer: :static } do
+  # dashboard
+  match "/index.html", %{ layer: :static, reverse_host: ["harvester" | _rest] } do
     forward conn, [], "http://dashboard/index.html"
   end
 
-  get "/assets/*path",  %{ layer: :static } do
+  get "/assets/*path",  %{ layer: :static, reverse_host: ["harvester" | _rest] } do
     forward conn, path, "http://dashboard/assets/"
   end
 
-  get "/@appuniversum/*path", %{ layer: :static } do
+  get "/@appuniversum/*path", %{ layer: :static, reverse_host: ["harvester" | _rest] } do
     forward conn, path, "http://dashboard/@appuniversum/"
+  end
+
+  # frontend
+  match "/index.html", %{ layer: :static, reverse_host: ["data" | _rest] } do
+    forward conn, [], "http://frontend/index.html"
+  end
+
+  get "/assets/*path",  %{ layer: :static, reverse_host: ["data" | _rest] } do
+    forward conn, path, "http://frontend/assets/"
+  end
+
+  get "/@appuniversum/*path", %{ layer: :static, reverse_host: ["data" | _rest] } do
+    forward conn, path, "http://frontend/@appuniversum/"
   end
 
   ###############
   # SPARQL
   ###############
-  match "/sparql", %{ layer: :sparql, accept: %{ sparql: true } } do
+  match "/sparql", %{ layer: :sparql, accept: %{ sparql: true} } do
     forward conn, [], "http://database:8890/sparql"
   end
-
 
   #################
   # FRONTEND PAGES
   #################
 
-  # self-service
-  match "/*path", %{ layer: :frontend_fallback, accept: %{ html: true } } do
+  # dashboard
+  match "/*path", %{ layer: :frontend_fallback, accept: %{ html: true }, reverse_host: ["harvester" | _rest] } do
     # we don't forward the path, because the app should take care of this in the browser.
     forward conn, [], "http://dashboard/index.html"
   end
+  
+  # frontend
+  match "/*path", %{ layer: :frontend_fallback, accept: %{ html: true }, reverse_host: ["data" | _rest] } do
+    # we don't forward the path, because the app should take care of this in the browser.
+    forward conn, [], "http://frontend/index.html"
+  end
+
 
   # match "/favicon.ico", @any do
   #   send_resp( conn, 404, "" )
@@ -60,85 +80,85 @@ defmodule Dispatcher do
   # RESOURCES
   ###############
 
-  match "/remote-data-objects/*path", %{ layer: :resources, accept: %{ json: true } } do
+  match "/remote-data-objects/*path", %{ layer: :resources, accept: %{ json: true }, reverse_host: ["harvester" | _rest] } do
     Proxy.forward conn, path, "http://resource/remote-data-objects/"
   end
 
-  match "/basic-authentication-credentials/*path", %{ layer: :resources, accept: %{ json: true } } do
+  match "/basic-authentication-credentials/*path", %{ layer: :resources, accept: %{ json: true }, reverse_host: ["harvester" | _rest] } do
     Proxy.forward conn, path, "http://cache/basic-authentication-credentials/"
   end
 
-  match "/basic-security-schemes/*path", %{ layer: :resources, accept: %{ json: true } } do
+  match "/basic-security-schemes/*path", %{ layer: :resources, accept: %{ json: true }, reverse_host: ["harvester" | _rest] } do
     Proxy.forward conn, path, "http://cache/basic-security-schemes/"
   end
 
-  match "/oauth2-credentials/*path", %{ layer: :resources, accept: %{ json: true } } do
+  match "/oauth2-credentials/*path", %{ layer: :resources, accept: %{ json: true }, reverse_host: ["harvester" | _rest] } do
     Proxy.forward conn, path, "http://cache/oauth2-credentials/"
   end
 
-  match "/oauth2-security-schemes/*path", %{ layer: :resources, accept: %{ json: true } } do
+  match "/oauth2-security-schemes/*path", %{ layer: :resources, accept: %{ json: true }, reverse_host: ["harvester" | _rest] } do
     Proxy.forward conn, path, "http://cache/oauth2-security-schemes/"
   end
 
-  match "/authentication-configurations/*path", %{ layer: :resources, accept: %{ json: true } } do
+  match "/authentication-configurations/*path", %{ layer: :resources, accept: %{ json: true }, reverse_host: ["harvester" | _rest] } do
     Proxy.forward conn, path, "http://cache/authentication-configurations/"
   end
 
-  match "/harvesting-collections/*path", %{ layer: :resources, accept: %{ json: true } } do
+  match "/harvesting-collections/*path", %{ layer: :resources, accept: %{ json: true }, reverse_host: ["harvester" | _rest] } do
     Proxy.forward conn, path, "http://cache/harvesting-collections/"
   end
 
-  match "/jobs/*path", %{ layer: :resources, accept: %{ json: true } } do
+  match "/jobs/*path", %{ layer: :resources, accept: %{ json: true }, reverse_host: ["harvester" | _rest] } do
     Proxy.forward conn, path, "http://cache/jobs/"
   end
 
-  match "/tasks/*path", %{ layer: :resources, accept: %{ json: true } } do
+  match "/tasks/*path", %{ layer: :resources, accept: %{ json: true }, reverse_host: ["harvester" | _rest] } do
     Proxy.forward conn, path, "http://resource/tasks/"
   end
 
-  match "/scheduled-jobs/*path", %{ layer: :resources, accept: %{ json: true } } do
+  match "/scheduled-jobs/*path", %{ layer: :resources, accept: %{ json: true }, reverse_host: ["harvester" | _rest] } do
     Proxy.forward conn, path, "http://cache/scheduled-jobs/"
   end
 
-  match "/scheduled-tasks/*path", %{ layer: :resources, accept: %{ json: true } } do
+  match "/scheduled-tasks/*path", %{ layer: :resources, accept: %{ json: true }, reverse_host: ["harvester" | _rest] } do
     Proxy.forward conn, path, "http://cache/scheduled-tasks/"
   end
 
-  match "/cron-schedules/*path", %{ layer: :resources, accept: %{ json: true } } do
+  match "/cron-schedules/*path", %{ layer: :resources, accept: %{ json: true }, reverse_host: ["harvester" | _rest] } do
     Proxy.forward conn, path, "http://cache/cron-schedules/"
   end
 
-  match "/data-containers/*path", %{ layer: :resources, accept: %{ json: true } } do
+  match "/data-containers/*path", %{ layer: :resources, accept: %{ json: true }, reverse_host: ["harvester" | _rest] } do
     Proxy.forward conn, path, "http://resource/data-containers/"
   end
 
-  match "/job-errors/*path", %{ layer: :resources, accept: %{ json: true } } do
+  match "/job-errors/*path", %{ layer: :resources, accept: %{ json: true }, reverse_host: ["harvester" | _rest] } do
     Proxy.forward conn, path, "http://cache/job-errors/"
   end
 
-  get "/files/:id/download" do
+  get "/files/:id/download", %{ reverse_host: ["harvester" | _rest] } do
     Proxy.forward conn, [], "http://file/files/" <> id <> "/download"
   end
 
-  match "/files/*path" do
+  match "/files/*path", %{ reverse_host: ["harvester" | _rest] } do
     Proxy.forward conn, path, "http://resource/files/"
   end
 
   #################################################################
   # login
   #################################################################
-  match "/sessions/*path", %{ layer: resources, accept: %{ any: true}} do
+  match "/sessions/*path", %{ layer: resources, accept: %{ any: true}, reverse_host: ["harvester" | _rest]} do
     Proxy.forward conn, path, "http://login/sessions/"
   end
 
   #################################################################
   # DCAT
   #################################################################
-  match "/datasets/*path", %{ layer: :resources, accept: %{ json: true } } do
+  match "/datasets/*path", %{ layer: :resources, accept: %{ json: true }, reverse_host: ["harvester" | _rest]} do
     Proxy.forward conn, path, "http://cache/datasets/"
   end
 
-  match "/distributions/*path", %{ layer: :resources, accept: %{ json: true } } do
+  match "/distributions/*path", %{ layer: :resources, accept: %{ json: true }, reverse_host: ["harvester" | _rest] } do
     Proxy.forward conn, path, "http://cache/distributions/"
   end
 
