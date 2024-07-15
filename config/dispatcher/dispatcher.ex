@@ -76,6 +76,22 @@ defmodule Dispatcher do
   #   send_resp( conn, 404, "" )
   # end
 
+  ##############################################
+  # METIS
+  ##############################################
+
+  get "/uri-info/*path", %{ accept: %{ json: true }, reverse_host: ["data" | _rest] } do
+    forward conn, path, "http://uri-info/"
+  end
+
+  get "/resource-labels/*path", %{ accept: %{ json: true }, reverse_host: ["data" | _rest] } do
+    forward conn, path, "http://resource-labels-cache/"
+  end
+
+  get "/resource-labels/*path", %{reverse_host: ["data" | _rest]} do
+    Proxy.forward conn, path, "http://resource-labels/"
+  end
+
   ###############
   # RESOURCES
   ###############
