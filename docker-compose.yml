@@ -47,7 +47,7 @@ services:
     restart: always
     logging: *default-logging
   dashboard:
-    image: lblod/frontend-harvesting-self-service:2.1.5
+    image: lblod/frontend-harvesting-self-service:2.2.0
     volumes:
       - ./config/frontend:/config
     labels:
