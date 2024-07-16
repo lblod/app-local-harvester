@@ -13,7 +13,7 @@ INSERT DATA
 
 
 	<http://redpencil.data.gift/id/cron-schedule/tabaj980-935e-4df8-9de8-724321ad881a> a <http://redpencil.data.gift/vocabularies/tasks/CronSchedule>;
-	<http://schema.org/repeatFrequency>  "38 4,5,16,14,15 * * *";
+	<http://schema.org/repeatFrequency>  "0 0 2 * *";
 		<http://mu.semte.ch/vocabularies/core/uuid> "tabaj980-935e-4df8-9de8-724321ad881a".
 	
 	
