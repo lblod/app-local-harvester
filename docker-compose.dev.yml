@@ -3,9 +3,17 @@ version: "3.7"
 services:
   identifier:
     restart: "no"
+  tlsproxy:
+    restart: "always"
+    build:
+      context: ./nginx-dev/.
     ports:
-      - 80:80
-
+      - "443:443"
+      - "80:80"
+    volumes:
+      - ./config/tlsproxy-dev/http:/etc/nginx/conf.d
+      - ./config/tlsproxy-dev/tcp:/etc/nginx/tcpconf.d
+      - ./config/tlsproxy-dev/nginx.conf:/etc/nginx/nginx.conf
   dispatcher:
     restart: "no"
 
