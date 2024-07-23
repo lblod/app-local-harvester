@@ -71,7 +71,7 @@ services:
     logging: *default-logging
 
   virtuoso:
-    image: redpencil/virtuoso:1.2.0-rc.1
+    image: nbittich/docker-virtuoso:geosparql-support-fix
     environment:
       SPARQL_UPDATE: "true"
       DEFAULT_GRAPH: "http://mu.semte.ch/graphs/public"
@@ -170,7 +170,7 @@ services:
       SUDO_QUERY_RETRY: "true"
       TARGET_GRAPH: "http://mu.semte.ch/graphs/harvesting"
       NODE_OPTIONS: "--max-old-space-size=4096" # needed with the new rdfa parser
-      WRITE_DEBUG_TTLS: "false"
+      WRITE_DEBUG_TTLS: "true"
     volumes:
       - ./data/files:/share
     labels:
@@ -179,7 +179,7 @@ services:
     logging: *default-logging
 
   harvest_cleanup:
-    image: lblod/harvesting-cleanup-previous-jobs-service:0.1.4
+    image: lblod/local-harvesting-cleanup-previous-jobs-service
     environment:
       MAX_DAYS_TO_KEEP_SUCCESSFUL_JOBS: 30
       MAX_DAYS_TO_KEEP_BUSY_JOBS: 7

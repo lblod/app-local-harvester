@@ -149,6 +149,14 @@
     sh:closed false .
 
 
+#Geo
+<https://data.vlaanderen.be/ns/generiek/#GeografischePositie> a sh:NodeShape ;
+    sh:targetClass <https://data.vlaanderen.be/ns/generiek/#GeografischePositie> ;
+    sh:closed false .
+<http://www.w3.org/ns/locn#Adres> a sh:NodeShape ;
+    sh:targetClass <http://www.w3.org/ns/locn#Adres> ;
+    sh:closed false .
+
 # Concept
 <http://www.w3.org/2004/02/skos/shacl/Concept> a sh:NodeShape ;
     sh:targetClass <http://www.w3.org/2004/02/skos/core#Concept> ;
