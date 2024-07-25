@@ -47,7 +47,7 @@ services:
     restart: always
     logging: *default-logging
   dashboard:
-    image: lblod/frontend-harvesting-self-service:feature-fixing-issue-in-job-creation
+    image: lblod/frontend-harvesting-self-service
     volumes:
       - ./config/frontend:/config
     labels:
@@ -71,7 +71,7 @@ services:
     logging: *default-logging
 
   virtuoso:
-    image: nbittich/docker-virtuoso:geosparql-support-fix
+    image: nbittich/virtuoso # geosparql support
     environment:
       SPARQL_UPDATE: "true"
       DEFAULT_GRAPH: "http://mu.semte.ch/graphs/public"
