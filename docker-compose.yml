@@ -185,7 +185,7 @@ services:
     volumes:
       - ./data/files:/share
   harvest_validate:
-    image: lblod/harvesting-validator:0.3.2
+    image: lblod/harvesting-validator:feature-remove-whitespace
     environment:
       TARGET_GRAPH: "http://mu.semte.ch/graphs/harvesting"
       STRICT_MODE_FILTERING: "false"
