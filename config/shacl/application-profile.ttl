@@ -157,6 +157,14 @@
     sh:targetClass <http://www.w3.org/ns/locn#Adres> ;
     sh:closed false .
 
+<http://www.w3.org/ns/locn#Location> a sh:NodeShape ;
+    sh:targetClass <http://www.w3.org/ns/locn#Location> ;
+    sh:closed false .
+
+<http://www.w3.org/ns/locn#Geometry> a sh:NodeShape ;
+    sh:targetClass <http://www.w3.org/ns/locn#Geometry> ;
+    sh:closed false .
+# 
 # Concept
 <http://www.w3.org/2004/02/skos/shacl/Concept> a sh:NodeShape ;
     sh:targetClass <http://www.w3.org/2004/02/skos/core#Concept> ;
