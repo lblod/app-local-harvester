@@ -16,6 +16,8 @@ PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
 PREFIX geor: <http://www.opengis.net/def/rule/geosparql/>
 PREFIX sf: <http://www.opengis.net/ont/sf#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX besluit: <http://data.vlaanderen.be/ns/besluit#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
 
 SELECT distinct ?place ?agenda
 WHERE {
