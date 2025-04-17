@@ -55,6 +55,14 @@ defmodule Dispatcher do
     forward conn, [], "http://database:8890/sparql"
   end
 
+  ###############################################################
+  # search
+  ###############################################################
+  match "/search/*path", %{ layer: :api_services, accept: [:json] } do
+    forward conn, path, "http://search/"
+  end
+
+
   #################
   # FRONTEND PAGES
   #################

@@ -1,0 +1,68 @@
+### list indices
+GET http://localhost:9200/_cat/indices?v
+Content-Type: application/json
+
+### create index
+PUT http://localhost:9200/my_locations2
+Content-Type: application/json
+
+{
+  "mappings": {
+    "properties": {
+      "location": {
+        "type": "geo_shape"
+      }
+    }
+  }
+}
+
+
+### index a doc
+POST http://localhost:9200/my_locations2/_doc/1
+Content-Type: application/json
+
+{
+  "name": "Somewhere in Belgium",
+  "location": {
+    "type": "point",
+    "coordinates": [150000, 170000],
+    "crs": "http://www.opengis.net/def/crs/EPSG/0/31370"
+  }
+}
+
+
+### search all
+POST http://localhost:9200/332f27a6b5abba0a9441f5d234f6623c/_search
+Content-Type: application/json
+
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+### search
+POST http://localhost:9200/332f27a6b5abba0a9441f5d234f6623c/_search
+Content-Type: application/json
+
+{
+  "query": {
+    "bool": {
+      "filter": {
+        "geo_distance": {
+          "distance": "10km",
+          "coord": {
+            "lat": 50.82328287671103,
+            "lon": 4.524313038010309
+         }
+        }
+      }
+    }
+  }
+}
+
+
+### mu search
+GET http://localhost/search/geometries/search?filter[:geo:coord]=50.8466414159896,4.501999194554501,1km
+Accept: application/json 
+

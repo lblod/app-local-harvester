@@ -1,0 +1,25 @@
+{
+    "count": 1,
+    "data": [
+        {
+            "type": "geometry",
+            "id": "c17a1fed-e4fe-5541-97ab-9e0ada548a13",
+            "attributes": {
+                "coord": {
+                    "lon": "4.48954413283221",
+                    "lat": "50.8374300570063"
+                },
+                "uuid": "c17a1fed-e4fe-5541-97ab-9e0ada548a13",
+                "uri": "https://data.vlaanderen.be/id/adres/867995/1"
+            },
+            "highlight": null
+        }
+    ],
+    "links": {
+        "self": "/geometries/search?filter%5b:geo:coord%5d=50.848486703379855%2c4.503947593947929%2c1.6km",
+        "first": "/geometries/search?filter%5b:geo:coord%5d=50.848486703379855%2c4.503947593947929%2c1.6km",
+        "last": "/geometries/search?filter%5b:geo:coord%5d=50.848486703379855%2c4.503947593947929%2c1.6km",
+        "prev": "/geometries/search?filter%5b:geo:coord%5d=50.848486703379855%2c4.503947593947929%2c1.6km",
+        "next": "/geometries/search?filter%5b:geo:coord%5d=50.848486703379855%2c4.503947593947929%2c1.6km"
+    }
+}
